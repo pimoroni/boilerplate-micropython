@@ -39,6 +39,18 @@ done
 
 inform "Checking $LIBRARY_NAME $LIBRARY_VERSION\n"
 
+inform "Checking package.json version..."
+JSON_VERSION=$(
+	python - <<EOF
+import json
+print(json.load(open("package.json"))["version"])
+EOF
+)
+if [[ "$LIBRARY_VERSION" != "$JSON_VERSION" ]]; then
+    warning "package.json version ($JSON_VERSION) does not match library version ($LIBRARY_VERSION)."
+    exit 1
+fi
+
 inform "Checking for trailing whitespace..."
 if grep -IUrn --color "[[:blank:]]$" --exclude-dir=dist --exclude-dir=.tox --exclude-dir=.git --exclude=PKG-INFO; then
     warning "Trailing whitespace found!"
