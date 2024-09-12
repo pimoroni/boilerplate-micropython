@@ -9,7 +9,6 @@ authors = [
   { name="Phil", email="phil@pimoroni.com" },
 ]
 description = "boilerplate example for MicroPython libraries"
-readme = "README.md"
 classifiers = [
     "License :: OSI Approved :: MIT License"
 ]
