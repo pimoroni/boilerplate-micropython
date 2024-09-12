@@ -37,3 +37,7 @@ jobs:
       - name: Run Bash Code Checks
         run: |
           make shellcheck
+
+      - name: Run Tool Code Checks
+        run: |
+          ruff check tools

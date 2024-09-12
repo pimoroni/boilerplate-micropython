@@ -1,7 +1,8 @@
 LIBRARY_NAME := $(shell hatch project metadata name 2> /dev/null)
 LIBRARY_VERSION := $(shell hatch version 2> /dev/null)
+REPO := $(shell git remote get-url origin)
 
-.PHONY: usage install uninstall check pytest qa build-deps check tag wheel sdist clean dist testdeploy deploy
+.PHONY: usage pytest qa dev-deps check tag clean testdeploy deploy package.json
 usage:
 ifdef LIBRARY_NAME
 	@echo "Library: ${LIBRARY_NAME}"
@@ -35,6 +36,9 @@ shellcheck:
 
 qa:
 	tox -e qa
+
+package.json:
+	./tools/mkpackagejson.py --ver ${LIBRARY_VERSION} --repo ${REPO} src/
 
 pytest:
 	tox -e py
