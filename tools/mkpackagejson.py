@@ -1,8 +1,9 @@
 #!/bin/env python
 
-import json
 import argparse
+import json
 from pathlib import Path
+
 
 def repo_url(repo_url):
     if "git@github.com:" not in repo_url and "https://github.com:" not in repo_url and len(repo_url.split("/")) != 2:
