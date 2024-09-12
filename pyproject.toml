@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling", "hatch-fancy-pypi-readme"]
+build-backend = "hatchling.build"
+
+[project]
+name = "boilerplate-micropython"
+dynamic = ["version"]
+authors = [
+  { name="Phil", email="phil@pimoroni.com" },
+]
+description = "boilerplate example for MicroPython libraries"
+readme = "README.md"
+classifiers = [
+    "License :: OSI Approved :: MIT License"
+]
+
+[tool.hatch.version]
+path = "src/boilerplate/__init__.py"
+
+[tool.hatch.build]
+include = [
+    "src/boilerplate/__init__.py",
+    "README.md",
+    "LICENSE.txt"
+]
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
+
+[tool.check-manifest]
+ignore = [
+    'check.sh',
+    'Makefile',
+    'tox.ini',
+    'tests/*',
+    'examples/*',
+    'requirements-dev.txt',
+    'package.json'
+]
+
+[project.urls]
+GitHub = "https://www.github.com/pimoroni/boilerplate-micropython"
+Homepage = "https://www.pimoroni.com"
