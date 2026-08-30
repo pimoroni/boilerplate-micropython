@@ -5,16 +5,50 @@ build-backend = "hatchling.build"
 [project]
 name = "boilerplate-micropython"
 dynamic = ["version", "readme"]
+description = "MicroPython driver for the Boilerplate"
+license = {file = "LICENSE.txt"}
+requires-python = ">= 3.9"
 authors = [
-  { name="Phil", email="phil@pimoroni.com" },
+    { name = "Philip Howard", email = "phil@pimoroni.com" },
 ]
-description = "boilerplate example for MicroPython libraries"
+maintainers = [
+    { name = "Philip Howard", email = "phil@pimoroni.com" },
+]
+keywords = [
+    "MicroPython",
+    "Pico",
+    "Pimoroni",
+]
 classifiers = [
-    "License :: OSI Approved :: MIT License"
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: Implementation :: MicroPython",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+]
+dependencies = []
+
+[project.urls]
+GitHub = "https://www.github.com/pimoroni/boilerplate-micropython"
+Homepage = "https://www.pimoroni.com"
+
+[dependency-groups]
+dev = [
+    "check-manifest",
+    "codespell",
+    "coverage",
+    "hatch",
+    "hatch-fancy-pypi-readme",
+    "pre-commit",
+    "pytest",
+    "ruff==0.16.5",
+    "tox",
+    "twine",
 ]
 
 [tool.hatch.version]
-path = "src/boilerplate/__init__.py"
+path = "src/boilerplate.py"
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"
@@ -26,7 +60,7 @@ fragments = [
 
 [tool.hatch.build]
 include = [
-    "src/boilerplate/__init__.py",
+    "src",
     "README.md",
     "CHANGELOG.md",
     "LICENSE.txt"
@@ -34,8 +68,25 @@ include = [
 
 [tool.hatch.build.targets.wheel]
 sources = ["src"]
+include = [
+    "src"
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "*"
+]
+exclude = [
+    ".*",
+    "dist",
+    "uv.lock"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
 [tool.ruff]
+src = ["src", "."]
 exclude = [
     '.tox',
     '.egg',
@@ -46,31 +97,28 @@ exclude = [
 ]
 line-length = 200
 
+[tool.ruff.lint]
+extend-select = ["I", "UP", "SIM", "PIE", "C4", "B", "RUF", "PERF", "FURB", "PLE"]
+
 [tool.codespell]
 skip = """
 ./.tox,\
+./.venv,\
 ./.egg,\
 ./.git,\
 ./__pycache__,\
 ./build,\
-./dist.\
+./dist\
 """
-
-[tool.isort]
-line_length = 200
 
 [tool.check-manifest]
 ignore = [
-    'check.sh',
     'Makefile',
     'tox.ini',
     'tests/*',
     'examples/*',
     'tools/*',
-    'requirements-dev.txt',
-    'package.json'
+    'package.json',
+    '.editorconfig',
+    '.pre-commit-config.yaml'
 ]
-
-[project.urls]
-GitHub = "https://www.github.com/pimoroni/boilerplate-micropython"
-Homepage = "https://www.pimoroni.com"
